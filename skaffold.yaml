@@ -16,3 +16,19 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
+    - image: emondarock/client-ticketing
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
+    - image: emondarock/tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .

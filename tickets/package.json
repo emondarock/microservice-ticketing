@@ -1,6 +1,6 @@
 {
-  "name": "auth",
-  "version": "1.0.0",
+  "name": "tickets",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@emon-workstation/common": "^1.0.3",
+    "@emon-workstation/common": "^1.0.5",
     "@types/cookie-session": "^2.0.44",
     "@types/express": "^4.17.12",
     "@types/jsonwebtoken": "^8.5.8",

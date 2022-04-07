@@ -1,0 +1,21 @@
+globalThis has no index signature TS Error
+
+In the upcoming lecture (and later with the ticketing, orders and payments services) you may end up seeing a TS error like this in your test/setup.ts file:
+
+Element implicitly has an 'any' type because type 'typeof globalThis' has no index signature.ts(7017)
+
+To fix, find the following lines of code in src/test/setup.ts:
+
+    declare global {
+      namespace NodeJS {
+        export interface Global {
+          signin(): Promise<string[]>;
+        }
+      }
+    }
+
+change to:
+
+        declare global {
+          var signin: () => Promise<string[]>;
+        }
