@@ -15,7 +15,22 @@ spec:
       containers:
         - name: tickets
           image: emondarock/tickets
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+            requests:
+              memory: 256Mi
+              cpu: "0.2"
           env:
+            - name:  NATS_URI
+              value: http://nats-srv:4222
+            - name:  NATS_CLUSTER_ID
+              value: ticketing
+            - name:  NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             - name:  MONGO_URI
               value: mongodb://tickets-mongo-srv:27017/tickets
             - name:  JWT_KEY

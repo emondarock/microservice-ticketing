@@ -15,6 +15,13 @@ spec:
       containers:
         - name: auth
           image: emondarock/auth
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+            requests:
+              memory: 256Mi
+              cpu: "0.2"
           env:
             - name:  MONGO_URI
               value: mongodb://tickets-mongo-srv:27017/tickets

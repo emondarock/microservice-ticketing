@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const buildClient = ({ req }) => {
+const build_client = ({ req }) => {
   if (typeof window === 'undefined') {
     // We are on the server
 
@@ -13,8 +13,9 @@ const buildClient = ({ req }) => {
     // We must be on the browser
     return axios.create({
       baseUrl: '/',
+      // headers: req.headers,
     });
   }
 };
 
-export default buildClient
+export default build_client

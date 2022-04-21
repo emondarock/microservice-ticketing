@@ -1,12 +1,14 @@
 import Link from 'next/link';
 
-const header = ({ currentUser }) => {
+const headers = ({ currentUser }) => {
   const links = [
     !currentUser && { label: 'Sign Up', href: '/auth/signup' },
     !currentUser && { label: 'Sign In', href: '/auth/signin' },
-    currentUser && { label: 'Sign Out', href: '/auth/signout' }
+    currentUser && { label: 'Sell Tickets', href: '/tickets/new' },
+    currentUser && { label: 'My Orders', href: '/orders' },
+    currentUser && { label: 'Sign Out', href: '/auth/signout' },
   ]
-    .filter(linkConfig => linkConfig)
+    .filter((linkConfig) => linkConfig)
     .map(({ label, href }) => {
       return (
         <li key={href} className="nav-item">
@@ -30,4 +32,4 @@ const header = ({ currentUser }) => {
   );
 };
 
-export default header
+export default headers

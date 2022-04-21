@@ -1,11 +1,14 @@
 import {
+  BadRequestError,
   NotAuthorizedError,
   NotFoundError,
   requireAuth,
 } from "@emon-workstation/common";
 import express, { Request, Response } from "express";
 import { body } from "express-validator";
+import { TicketUpdatedPublisher } from "../events/publisher/ticket-updated-publisher";
 import { Ticket } from "../models/tickets";
+import { natsWrapper } from "../nats-wrapper";
 const router = express.Router();
 
 router.put(
@@ -26,6 +29,9 @@ router.put(
     if (!ticket) {
       throw new NotFoundError();
     }
+    if (ticket.orderId) {
+      throw new BadRequestError("Cannot update resereved ticket");
+    }
     if (ticket?.userId !== req.currentUser!.id) {
       throw new NotAuthorizedError();
     }
@@ -34,7 +40,13 @@ router.put(
     ticket.price = price;
 
     await ticket.save();
-
+    new TicketUpdatedPublisher(natsWrapper.client).publish({
+      id: ticket.id,
+      version: ticket.version,
+      title: ticket.title,
+      price: ticket.price,
+      userId: ticket.userId,
+    });
     res.status(201).send(ticket);
   }
 );
